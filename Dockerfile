@@ -16,5 +16,7 @@ RUN mkdir -p build && \
     cmake .. && \
     make -j4 && \
     make install
+RUN apt-get install -y python-pip
+RUN pip install geopandas
 EXPOSE 8080
 CMD

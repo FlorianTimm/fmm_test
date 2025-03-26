@@ -24,7 +24,7 @@ Ziel: Nutzung von MapMatching um Fachdaten mit anderer Netzgrundlage auf ein bes
 ### Dockerimage
 
 ```
-docker build -f docker/Dockerfile . -t fmm_test
+docker build -f Dockerfile . -t fmm_test
 ```
 
 ### Terminal in Docker öffnen
