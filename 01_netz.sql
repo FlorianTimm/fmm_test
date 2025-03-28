@@ -26,20 +26,25 @@ select st_dump(st_node(st_collect(
 (g).geom
 --,20,20)
 ))) g from (
-SELECT st_dump(st_linemerge(st_collect(geom))) g FROM radnetz.radnetz_org
+SELECT st_dump(st_linemerge(st_collect(geom))) g FROM radnetz.radnetz
 ));
 	
 SELECT pgr_createTopology('radnetz.netz_pgr', 10, 'geom', clean := TRUE);
 
-UPDATE radnetz.netz_pgr SET geom = ST_SETPOINT(geom, 0, (SELECT the_geom FROM radnetz.netz_pgr_vertices_pgr p WHERE source = p.id));
 
-
-UPDATE radnetz.netz_pgr SET geom = ST_SETPOINT(geom, -1, (SELECT the_geom FROM radnetz.netz_pgr_vertices_pgr p WHERE target = p.id));
-
-SELECT  pgr_analyzeGraph('radnetz.netz_pgr',10,'geom');
+SELECT  pgr_nodeNetwork('radnetz.netz_pgr',10,the_geom=>'geom');
 
 SELECT pgr_createTopology('radnetz.netz_pgr_noded', 10, 'geom');
 SELECT  pgr_analyzeGraph('radnetz.netz_pgr_noded',10,'geom');
+
+
+UPDATE radnetz.netz_pgr_noded SET geom = ST_ADDPOINT(geom, (SELECT the_geom FROM radnetz.netz_pgr_noded_vertices_pgr p WHERE source = p.id), 0);
+UPDATE radnetz.netz_pgr_noded SET geom = ST_ADDPOINT(geom, (SELECT the_geom FROM radnetz.netz_pgr_noded_vertices_pgr p WHERE target = p.id), -1);
+
+
+
+
+
 
 
 UPDATE radnetz.netz_pgr SET 
