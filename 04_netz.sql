@@ -20,7 +20,7 @@ CREATE INDEX ON radnetz.netz_pgr_neu USING btree (target);
 INSERT INTO radnetz.netz_pgr_neu (id, geom, source, target)
 SELECT id, geom, source, target FROM radnetz.netz_pgr_noded;
 
-INSERT INTO radnetz.netz_pgr (id, geom, source, target)
+INSERT INTO radnetz.netz_pgr_neu (id, geom, source, target)
 SELECT -id, ST_REVERSE(geom), target, source FROM radnetz.netz_pgr_noded;
 
 
