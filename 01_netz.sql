@@ -40,22 +40,3 @@ SELECT  pgr_analyzeGraph('radnetz.netz_pgr_noded',10,'geom');
 
 UPDATE radnetz.netz_pgr_noded SET geom = ST_ADDPOINT(geom, (SELECT the_geom FROM radnetz.netz_pgr_noded_vertices_pgr p WHERE source = p.id), 0);
 UPDATE radnetz.netz_pgr_noded SET geom = ST_ADDPOINT(geom, (SELECT the_geom FROM radnetz.netz_pgr_noded_vertices_pgr p WHERE target = p.id), -1);
-
-
-
-
-
-
-
-UPDATE radnetz.netz_pgr SET 
-	cost = ST_LENGTH(geom),
-	x1 = ST_X(ST_StartPoint(geom)),
-	y1 = ST_Y(ST_StartPoint(geom)),
-	x2 = ST_X(ST_EndPoint(geom)),
-	y2 = ST_Y(ST_EndPoint(geom));
-
-	
---INSERT INTO radnetz.netz_pgr (geom)
---SELECT ST_REVERSE(geom) FROM radnetz.netz_pgr;
-
-
