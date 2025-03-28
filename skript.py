@@ -53,9 +53,9 @@ for id, route in routen.iterrows():
             g = row['geometry']
             id = row['id']
             lines.append([route['titel'], id, g])
-    except Exception:  # as e:
+    except Exception as e:
         print(route['titel'])
-        # print(e)
+        print(e)
         continue
 
 gdf = gpd.GeoDataFrame(lines, columns=["title", "id", "geometry"]).drop_duplicates()
